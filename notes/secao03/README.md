@@ -32,7 +32,7 @@ pip freeze > requirements.txt
 
 Abrir no VSCode 'code .' em seguida 'CRTL + Shift + P'  para selecionar o interpretador na versão instalada na aula anterior Python 3.8 referente ao venv
 
-```
+```Shell
 source projeto1/venv/bin/activate
 ```
 
@@ -40,7 +40,7 @@ Na coluna da barra de atividades do VSCode será ativado o ícone da extensão d
 
 Para testar criar arquivo 'test_testando.py' com o conteúdo:
 
-```
+```python
 def test_something():
     assert 1 == 1
 ```
@@ -54,7 +54,7 @@ O VSCode irá notificar sugerindo a instalação de algumas extensões que devem
 
 Podem também ser instalados pelo terminal
 
-```
+```Shell
 pip install -U autopep8 mypy flake8
 pip freeze > requirements.txt
 ```
