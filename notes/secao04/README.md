@@ -40,4 +40,6 @@ git commit -m "Commit inicial"
 git push --set-upstream origin main
 ```
 
+## Aula 13 - Repositório do curso
 
+[Repositório do curso](https://github.com/luizomf/curso-django-projeto1)
