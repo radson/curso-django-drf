@@ -4,7 +4,7 @@
 
 Foi utilizado pacote da distribuição com 'Python 3.8'
 
-```
+```Shell
 mkdir projeto1 && cd projeto1
 python3 -venv venv
 source venv/bin/activate
@@ -12,19 +12,19 @@ source venv/bin/activate
 
 Atualizar o gerenciador de pacotes do Python
 
-```
+```Shell
 pip install -U pip setuptools wheel
 ```
 
 Instalar o Django e o pytest
 
-```
+```Shell
 pip install django==3.2.14
 pip install pytest 
 ```
 Salvar lista de pacotes instalados
 
-```
+```Shell
 pip freeze > requirements.txt
 ```
 

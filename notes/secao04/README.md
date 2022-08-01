@@ -48,3 +48,24 @@ git push --set-upstream origin main
 
 [Fonte utilizada para a aula](https://djangowaves.com/tips-tricks/gitignore-for-a-python-project/)
 [Fonte pessoal](https://www.toptal.com/developers/gitignore/api/django,python)
+
+
+## Aula 15 - Hello Django - Uma breve conferida no servidor de desenvolvimento do Django
+
+Criar um projeto em Django
+
+```Shell
+django-admin starproject projeto .
+```
+
+O uso do '.' indica o local onde será criado o projeto. Se for omitido o Django vai criar uma estrutura de diretórios com o nome do projeto e dentro dele mais um com o mesmo nome. Essa estratégia visa simplificar a organização do código.
+
+Para executar o servidor http interno do Django para ambiente de desenvolvimento.
+
+```Shell
+python manage.py runserver
+```
+
+Um warning será mostrado das migrações não aplicadas, mas para esta aula pode ser ignorado.
+
+O ```manage.py``` e o ```django-admin``` contem algumas funcionalidades para gerenciamento de projetos e aplicações Django.
