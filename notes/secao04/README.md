@@ -43,3 +43,8 @@ git push --set-upstream origin main
 ## Aula 13 - Repositório do curso
 
 [Repositório do curso](https://github.com/luizomf/curso-django-projeto1)
+
+## Aula 14 - Um .gitignore exclusivo para o Django e Python
+
+[Fonte utilizada para a aula](https://djangowaves.com/tips-tricks/gitignore-for-a-python-project/)
+[Fonte pessoal](https://www.toptal.com/developers/gitignore/api/django,python)
