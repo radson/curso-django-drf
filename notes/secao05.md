@@ -129,3 +129,83 @@ urlpatterns = [
     path('', include('recipes.urls')),
 ]
 ```
+
+## Aula 24. Templates e renderização de HTML no Django
+
+### Objetivo
+
+Para correta exibição do HTML é necessário utilizar os recursos de *templates* do Django. 
+
+### Etapas
+
+No diretório do app *recipes* criar o diretório que irá conter os templates. O uso de um subdiretório com o nome do app é para criar um namespace e evitar conflito com outros arquivos de mesmo nome.
+
+```Shell
+recipes/
+└── templates
+    └── recipes
+        └── home.html
+```
+
+No arquivo html incluir o conteúdo
+
+```Html
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Recipes</title>
+    </head>
+    <body>
+        <h1>Recipes</h1>
+    </body>
+</html>
+```
+
+Para que a app *recipes* esteja disponível no projeto, deve ser configurada no arquivo ```settings.py``` na lista de  ```INSTALLED_APPS```, incluir:
+
+```Python
+INSTALLED_APPS = [
+    # outros apps padrão instalados
+    'recipes',
+]
+```
+
+No arquivo views.py alterar a view home para o template criado. O Django por padrão busca dentro do diretório templates de cada app. Neste exemplo é especificado o namespace *recipes* para identificar qual templates deve-se usar.
+
+```Python
+from django.shortcuts import render
+
+def home(request):
+    return render(request, 'recipes/home.html')
+```
+
+O Django permite configurar uma estrutura personalizade de templates, para esta aplicação será incluída uma estrutura a ser compartilhada entre diversos apps, o Django permite configurar no settings na lista ```TEMPLATES```
+
+```Python
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            BASE_DIR / 'base_templates',
+        ],
+        # suprimido texto de outras configs
+    }
+]
+```
+
+No diretório raiz do projeto, adicionar o diretório correspondente onde ficarão os templates conforme estrutura a seguir. Para este exemplo será usado o namespace *global*.
+
+```Shell
+projeto1/
+├── base_templates
+│   ├── global
+│       └── base.html
+└── recipes
+│   ├── templates
+│   │   └── recipes
+│   │       └── home.html
+```
+
