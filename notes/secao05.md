@@ -81,3 +81,51 @@ recipes
 ├── tests.py
 └── views.py
 ```
+
+## Aula 23. Movendo o código para o app recipes
+
+### Objetivo
+
+Iniciar a criação das views necessárias para a app *recipes*
+
+### Etapas
+
+Dentro de ```recipes/views.py``` adicionar algumas views básicas que retornar uma string
+
+```Python
+from django.http import HttpResponse
+
+def home(request):
+    return HttpResponse('HOME')
+
+def contato(request):
+    return HttpResponse("Contato")
+
+def sobre(request):
+    return HttpResponse("Sobre")
+```
+
+Criar um arquivo de rotas para a app *recipes* em ```recipes/urls.py``` com o seguinte conteúdo.
+
+```Python
+from django.urls import path
+
+from .views import contato, home, sobre
+
+urlpatterns = [
+    path('', home),
+    path('contato/', contato),
+    path('sobre/', sobre),
+]
+```
+
+No arquivo de rotas do projeto incluir um mapeamento para as rotas do app usando o ```include```.
+
+```Python
+from django.urls import include, path
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('recipes.urls')),
+]
+```
