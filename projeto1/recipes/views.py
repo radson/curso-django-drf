@@ -7,7 +7,7 @@ def home(request):
 
 
 def contato(request):
-    return HttpResponse("Contato")
+    return render(request, 'recipes/contato.html')
 
 
 def sobre(request):
