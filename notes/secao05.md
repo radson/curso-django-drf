@@ -232,3 +232,33 @@ Serão tratados os recursos:
 * Forms e validacoes;
 * Criação de usuários e autenticação
 * reCaptcha
+
+## 27. Adicionando font-awesome no template
+
+### Objetivos
+
+* Criar a estrutura inicial para o template sem uso dos recursos de arquivos estáticos.
+* Remover as views de *sobre* e *contato*.
+* Adicionar CDN da font-awesome
+
+### Etapas
+
+Em ```recipe/views.py``` excluir as view para sobre e contato. Em 
+
+```Python
+from django.http import HttpResponse
+from django.shortcuts import render
+
+def home(request):
+    return render(request, 'recipes/home.html')
+```
+
+Em ```recipe/urls.py``` remover as rotas.
+
+```Python
+from .views import home
+
+urlpatterns = [
+    path('', home),
+]
+```
