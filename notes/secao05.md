@@ -219,3 +219,16 @@ Explorando o método ```render``` e os parâmetros que recebe.
 
 Conforme documentação [render](https://docs.djangoproject.com/pt-br/3.2/topics/http/shortcuts/#render)
 
+## 26. O que vamos criar neste projeto? Conheça o nosso site!
+
+### Objetivos
+
+Explicando o projeto, uma prévia
+
+### Etapas
+
+Serão tratados os recursos:
+
+* Forms e validacoes;
+* Criação de usuários e autenticação
+* reCaptcha
