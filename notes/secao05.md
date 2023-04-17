@@ -616,3 +616,51 @@ No arquivo ```head.html``` incluir novos estilos para o grid.
 </style>
 ```
 
+## 33. Criando o card de receitas - Parte 1
+
+### Objetivos
+
+Criar o card da receita
+
+### Etapas
+
+No arquivo ```home.html``` criar os containers relativo aos cards das receitas. 
+
+
+```Html
+<!-- Omitido código sem alteração  -->
+
+<div class="main-content main-content-list container">
+    <div class="recipe recipe-list-item">
+        <div class="recipe-cover">
+            <img src="https://via.placeholder.com/1280x720.png/269fe6" alt="Temporário">
+        </div>
+    </div>
+</div>
+```
+
+No arquivo ```head.html``` incluir novos estilos para o card.
+
+```Html
+<style>
+    /*Omitido código sem alteração*/
+    .recipe {
+        background: var(--color-white);
+        box-shadow: -5px 5px 10px rgba(0, 0, 0, .2);
+        transform: scale(1);
+        transition: all 300ms ease-in-out;
+    }
+
+    .recipe img {
+        max-width: 100%;
+    }
+
+    .recipe-list-item {
+        max-width: 64rem;
+    }
+
+    .recipe-list-item:hover {
+        transform: scale(1.02);
+    }
+</style>
+```
