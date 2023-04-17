@@ -837,3 +837,120 @@ No arquivo ```head.html``` incluir novos estilos para o card.
 
 </style>
 ```
+
+## 36. Adicionado o footer (rodapé)
+
+### Objetivos
+
+Adicionando um footer
+
+### Etapas
+
+No arquivo ```home.html``` recortar o conteúdo dentro do conteiner ```recipe-list-item``` e colar em um novo aquivo com nome ```templates/partials/recipe.html```. 
+
+```Html
+<div class="recipe recipe-list-item">
+    <div class="recipe-cover">
+        <img src="https://via.placeholder.com/1280x720.png/269fe6" alt="Temporário">
+    </div>
+    <div class="recipe-title-container">
+        <h2 class="recipe-title">Lorem ipsum dolor sit amet.</h2>
+    </div>
+    <div class="recipe-author">
+        <span class="recipe-author-item">
+            <i class="fa-solid fa-user"></i>
+            Radson
+        </span>
+        <span class="recipe-author-item">
+            <i class="fa-solid fa-calendar-alt"></i>
+            16/01/2023 as 11:30
+        </span>
+        <span class="recipe-author-item">
+            <a href="/recipes/category/cafe-da-manha/">
+                <i class="fa-solid fa-layer-group"></i>
+                <span>Cafe da manha</span>
+            </a>
+        </span>
+    </div>
+
+    <div class="recipe-content">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim amet aliquam, nihil culpa provident nisi laboriosam autem ullam magni saepe error odio! Vel, eligendi! Neque earum voluptate quos iste molestiae!</p>
+    </div>
+
+    <div class="recipe-meta-container">
+        <div class="recipe-meta recipe-preparation">
+            <h3 class="recipe-meta-title"><i class="fa-solid fa-stopwatch"></i> Preparo</h3>
+            <div class="recipe-meta-text">
+                0 minutos
+            </div>
+        </div>
+
+        <div class="recipe-meta recipe-servings">
+            <h3 class="recipe-meta-title"><i class="fa-solid fa-pizza-slice"></i> Porções</h3>
+            <div class="recipe-meta-text">
+                0 Porções
+            </div>
+        </div>
+       
+    </div>
+    <footer class="recipe-footer">
+        <a href="" class="recipe-read-more button button-dark button-full-width">
+            <i class="fa-solid fa-eye"></i>
+            <span>ver mais...</span>
+        </a>
+    </footer>
+</div>
+```
+
+Criar um novo arquivo em partials para o footer com nome ```templates/partials/footer.html``` e o conteúdo:
+
+```Html
+<footer class="main-footer">
+    <div class="developer">
+        <a href="https://github.com/radson" target="_blank" rel="no-referrer">by Radson Santos</a>
+    </div>
+
+    <div class="powered">
+        <a href="https://www.djangoproject.com/" target="_blank" rel="no-referrer"> Powered by Django</a>
+    </div>
+</footer>
+```
+
+Ajustar o conteúdo de ```home.html``` para incluir o ```recipe.html``` e o ```footer.html```.
+
+```Html
+<main class="main-content-container">   
+    <div class="main-content main-content-list container">
+        {% include 'recipes/partials/recipe.html' %}
+
+    </div>
+</main>
+
+{% include 'recipes/partials/footer.html' %}
+```
+
+No arquivo ```head.html``` incluir novos estilos para o footer.
+
+```Html
+<style>
+    /*Omitido código sem alteração*/
+    .main-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: var(--color-primary-dark);
+        color: var(--color-white);
+        padding: var(--spacing-gutter-large);
+    }
+
+    .main-footer a {
+        color: var(--color-white);
+        text-decoration: none;
+        transition: all 300ms ease-in-out;
+    }
+
+    .main-footer a:hover {
+        filter: brightness(.8);
+    }
+</style> 
+``` 
