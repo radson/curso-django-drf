@@ -262,3 +262,78 @@ urlpatterns = [
     path('', home),
 ]
 ```
+
+## 28. Criando a header, separando um "partial" para head e usando include no template
+
+### Objetivos
+
+Iniciar a criação da estrutura do site separando em arquivos parciais e usando a diretiva include do sistema de templates do Django.
+
+### Etapas
+
+No app ```recipes``` no diretório de templates, atualizar a estrutura para ficar como a seguir, reaproveitando o arquivo ```home.html``` anteriormente criado.
+
+```
+templates
+└── recipes
+    ├── pages
+    │   └── home.html
+    └── partials
+        └── head.html
+``` 
+
+Em ```partials``` irão ficar os trechos de html que serão compartilhadas com outras páginas dessa aplicação. Nesta aula será criado o ```head.html``` que conterá o trecho ```<head>``` recortado do arquivo ```home.html```. 
+
+Arquivo ```head.html```
+
+```Html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/fontawesome.min.css" integrity="sha512-SgaqKKxJDQ/tAUAAXzvxZz33rmn7leYDYfBP+YoMRSENhf3zJyx3SBASt/OfeQwBHA1nxMis7mM3EV/oYT6Fdw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/brands.min.css" integrity="sha512-9YHSK59/rjvhtDcY/b+4rdnl0V4LPDWdkKceBl8ZLF5TB6745ml1AfluEU6dFWqwDw9lPvnauxFgpKvJqp7jiQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/solid.min.css" integrity="sha512-yDUXOUWwbHH4ggxueDnC5vJv4tmfySpVdIcN1LksGZi8W8EVZv4uKGrQc0pVf66zS7LDhFJM7Zdeow1sw1/8Jw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <title>Recipes</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 62.5%;
+        }
+
+        body{
+            font-size: 1.6rem;
+        }
+    </style>
+</head>
+```
+
+No arquivo ```home.html```, será usada a diretiva ```include``` para que o Django insira o conteúdo do ```head.html``` no arquivo ```home.html```.
+
+```Html
+{% include 'recipes/partials/head.html' %}
+
+<body>
+    <header class="main-header-container">
+        <div class="main-header container">
+            <h1>
+                <a href="/">
+                    <i class="fa-solid fa-house"></i>  
+                    <span>Recipes {{name}}</span>
+                </a>
+            </h1>
+        </div>
+    </header>
+</body>
+</html>
+```
