@@ -751,4 +751,89 @@ No arquivo ```head.html``` incluir novos estilos para o card.
 </style>
 ```
 
+## 35. Criando o card de receita - parte 3
 
+### Objetivos
+
+Criar o card da receita
+
+### Etapas
+
+No arquivo ```home.html``` criar os containers relativo às informações da receita. Abaixo da div de ```recipe-content```.
+
+```Html
+<!-- Omitido código sem alteração  -->
+<div class="recipe-content">
+    <!-- Omitido código sem alteração  -->
+</div>
+
+<div class="recipe-meta-container">
+    <div class="recipe-meta recipe-preparation">
+        <h3 class="recipe-meta-title"><i class="fa-solid fa-stopwatch"></i> Preparo</h3>
+        <div class="recipe-meta-text">
+            0 minutos
+        </div>
+    </div>
+
+    <div class="recipe-meta recipe-servings">
+        <h3 class="recipe-meta-title"><i class="fa-solid fa-pizza-slice"></i> Porções</h3>
+        <div class="recipe-meta-text">
+            0 Porções
+        </div>
+    </div>
+    
+</div>
+<footer class="recipe-footer">
+    <a href="" class="recipe-read-more button button-dark button-full-width">
+        <i class="fa-solid fa-eye"></i>
+        <span>ver mais...</span>
+    </a>
+</footer>
+```
+
+No arquivo ```head.html``` incluir novos estilos para o card.
+
+```Html
+<style>
+    /*Omitido código sem alteração*/
+    .recipe {
+        /*Omitido código sem alteração*/
+        border-radius: .4rem;
+        overflow: hidden;
+    }
+
+    .recipe-meta-container {
+        display: flex;
+        flex-flow: row wrap;
+        padding: var(--spacing-gutter-medium);
+        background: var(--color-gray-1);
+    }
+
+    .recipe-meta {
+        display: flex;
+        flex-flow: column nowrap;
+        flex-shrink: 1;
+        flex-grow: 1;
+        text-align: center;
+    }
+
+    .recipe-meta-title {
+        font-size: 1.6rem;
+    }
+
+    .recipe-footer a {
+        background: var(--color-primary-dark);
+        display: block;
+        color: var(--color-white);
+        text-decoration: none;
+        text-align: center;
+        padding: 1.5rem var(--spacing-gutter-medium);
+        transition: all 300ms ease-in-out;
+    }
+
+    .recipe-footer a:hover {
+        filter: brightness(2);
+    }
+
+</style>
+```
