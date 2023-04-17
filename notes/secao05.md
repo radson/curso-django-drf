@@ -664,3 +664,91 @@ No arquivo ```head.html``` incluir novos estilos para o card.
     }
 </style>
 ```
+
+## 34. Criando o card de receita - parte 2
+
+### Objetivos
+
+Criar o card da receita
+
+### Etapas
+
+No arquivo ```home.html``` criar os containers relativo às informações do autor e conteúdo do card.
+
+```Html
+<!-- Omitido código sem alteração  -->
+<div class="recipe-cover">
+    <img src="https://via.placeholder.com/1280x720.png/269fe6" alt="Temporário">
+</div>
+<div class="recipe-title-container">
+    <h2 class="recipe-title">Lorem ipsum dolor sit amet.</h2>
+</div>
+<div class="recipe-author">
+    <span class="recipe-author-item">
+        <i class="fa-solid fa-user"></i>
+        Radson
+    </span>
+    <span class="recipe-author-item">
+        <i class="fa-solid fa-calendar-alt"></i>
+        16/01/2023 as 11:30
+    </span>
+    <span class="recipe-author-item">
+        <a href="/recipes/category/cafe-da-manha/">
+            <i class="fa-solid fa-layer-group"></i>
+            <span>Cafe da manha</span>
+        </a>
+    </span>
+</div>
+
+<div class="recipe-content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim amet aliquam, nihil culpa provident nisi laboriosam autem ullam magni saepe error odio! Vel, eligendi! Neque earum voluptate quos iste molestiae!</p>
+</div>
+```
+
+No arquivo ```head.html``` incluir novos estilos para o card.
+
+```Html
+<style>
+    /*Omitido código sem alteração*/
+    body{
+            /*Omitido código sem alteração*/
+            color: var(--color-dark-text);
+        }
+    .recipe-list-item:hover {
+        transform: scale(1.02);
+        box-shadow: -8px 8px 18px rgba(0, 0, 0, .25);
+    }
+
+    .recipe-title-container {
+        padding: var(--spacing-gutter-medium);
+        padding-bottom: 2rem;
+    }
+
+    .recipe-author {
+        padding: 0 var(--spacing-gutter-medium);
+    }
+
+    .recipe-content {
+        padding: var(--spacing-gutter-medium);
+        padding-top: 2rem;
+    }
+
+    .recipe-author-item {
+        color: var(--color-gray-4);
+        margin-right: 1rem;
+    }
+
+    .recipe-author a {
+        color: var(--color-primary);
+        transition: all 300ms ease-in-out;
+        text-decoration: none;
+    }
+
+    .recipe-author a:hover {
+        color: var(--color-primary-dark);
+    }
+
+</style>
+```
+
+
