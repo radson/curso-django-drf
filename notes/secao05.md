@@ -284,6 +284,13 @@ templates
 
 Em ```partials``` irão ficar os trechos de html que serão compartilhadas com outras páginas dessa aplicação. Nesta aula será criado o ```head.html``` que conterá o trecho ```<head>``` recortado do arquivo ```home.html```. 
 
+Arquivo ```views.py``` atualizando o caminho do template.
+
+```Python
+def home(request):
+    return render(request, 'recipes/pages/home.html')
+``` 
+
 Arquivo ```head.html```
 
 ```Html
@@ -336,4 +343,126 @@ No arquivo ```home.html```, será usada a diretiva ```include``` para que o Djan
     </header>
 </body>
 </html>
+```
+
+## 29. Ajustando o estilo CSS da Header
+
+### Objetivos
+
+Aplicar um layout e estilo para o Header
+
+### Etapas
+
+No arquivo ```head.html``` incluir referencias para a fonte *Roboto Slab* do Google, após as referencias do Font-awesome
+
+```Html
+ <!--> Código anterior omitido <-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@900&display=swap" rel="stylesheet">
+```
+
+Ainda no arquivo ```head.html``` na seção  ```<style>```, incluir definições de algumas variáveis e novas classes de CSS
+
+```Html
+<style>
+    :root {
+        --color-primary: #269fe6;
+        --color-primary-hover: #2086c2;
+        --color-primary-dark: #13141f;
+        --color-primary-dark-hover: #212336;
+        --color-primary-light: #d4ecfa;
+        --color-primary-light-hover: #bdd8e7;
+
+        --color-white: #fff;
+        --color-black: #000;
+
+        --color-dark-text: #444;
+        --color-info-light: #cce5ff;
+        --color-debug-light: #cce5ff;
+        --color-success-light: #d4edda;
+        --color-alert-light: #fff3cd;
+        --color-warning-light: #fff3cd;
+        --color-error-light: #f8d7da;
+
+        --color-info-dark: #4d86c4;
+        --color-debug-dark: #4d86c4;
+        --color-success-dark: #4a9c5d;
+        --color-alert-dark: #927f40;
+        --color-warning-dark: #927f40;
+        --color-error-dark: #da525d;
+
+        --color-gray-0: #f9f9f9;
+        --color-gray-1: #e0e0e0;
+        --color-gray-2: #c7c7c7;
+        --color-gray-3: #aeaeae;
+        --color-gray-4: #959595;
+        --color-gray-5: #7d7d7d;
+        --color-gray-6: #646464;
+        --color-gray-7: #4b4b4b;
+        --color-gray-8: #323232;
+        --color-gray-9: #191919;
+
+        --font-primary: sans-serif;
+        --font-headings: 'Roboto Slab', serif;
+
+        --spacing-gutter-medium: 3rem;
+        --spacing-gutter-large: 4rem;
+    }
+
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+
+    html {
+        font-size: 62.5%;
+    }
+
+    body{
+        font-size: 1.6rem;
+        font-family: var(--font-primary);
+    }
+
+    h1,h2,h3,h4,h5,h6 {
+        font-family: var(--font-headings);
+    }
+
+    .container {
+        max-width: 144rem;
+        margin: 0 auto;
+        padding: var(--spacing-gutter-medium);
+    }
+
+    .main-header-container { 
+        background: var(--color-primary-dark);
+    }
+
+    .main-logo {
+        font-size: 4rem;
+        color: var(--color-white);
+        text-decoration: none;
+        display: flex;
+        flex-flow:  row nowrap;
+        align-items: center;
+        justify-content: center;
+        width: fit-content;
+        margin: 0 auto;
+    }
+
+    .main-logo-icon {
+        margin-right: 2rem;
+    }
+</style>
+```
+
+No arquivo ```home.html``` ajustar o conteúdo da tag ```<a>``` dentro de ```<h1>``` para corresponder às novas definições de CSS.
+
+```Html
+<a class="main-logo" href="/">
+    <i class="fa-solid fa-utensils main-logo-icon"></i>  
+    <span class="main-logo-text">Recipes</span>
+</a>
 ```
