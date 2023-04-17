@@ -466,3 +466,100 @@ No arquivo ```home.html``` ajustar o conteúdo da tag ```<a>``` dentro de ```<h1
     <span class="main-logo-text">Recipes</span>
 </a>
 ```
+
+## 30. Criando a área de busca com form, input e button (search)
+
+### Objetivos
+
+Criar um input de busca abaixo do header
+
+### Etapas
+
+No arquivo ```home.html``` recortar o conteúdo dentro da tag ```<header>``` e colar em um novo aquivo com nome ```templates/partials/header.html```. 
+
+```Html
+<header class="main-header-container">
+    <div class="main-header container">
+        <h1>
+            <a class="main-logo" href="/">
+                <i class="fa-solid fa-utensils main-logo-icon"></i>  
+                <span class="main-logo-text">Recipes</span>
+            </a>
+        </h1>
+    </div>
+</header>
+```
+
+No arquivo ```home.html``` dentro da tag ```<body>``` usar o ```include``` referenciando o arquivo acima criado. Além disso criar um container de busca com o conteúdo abaixo.
+
+```Html
+<body>
+    {% include 'recipes/partials/header.html' %}
+
+    <div class="search-container">
+        <div class="container">
+            <form action="" class="search-form">
+                <input type="search" class="search-input" name="search">
+                <button type="submit" class="search-button"><i class="fa-solid fa-search"></i></button>
+            </form>
+        </div>
+    </div>
+</body>
+```
+
+No arquivo ```head.html``` alterar o backgrou para a class ```body``` e criar novas classes para os containers recem criados para o campo de busca.
+
+```Html
+<style>
+    /*Omitido texto sem alteração*/
+
+    body{
+            font-size: 1.6rem;
+            font-family: var(--font-primary);
+            background: var(--color-gray-1);
+        }
+
+    .search-form {
+        border: .2rem solid var(--color-primary-dark);
+        max-width: 64rem;
+        margin: 0 auto;
+        border-radius: .4rem;
+        position: relative;
+        transition: all 300ms ease-in-out;
+    }
+
+    .search-input,
+    .search-button {
+        border: none;
+        background: none;
+        outline: none;
+        padding: 1rem;
+        transition: all 300ms ease-in-out;
+    }
+
+    .search-button {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+
+    .search-button:focus {
+        outline: 1px solid var(--color-primary);
+        background: rgba(0, 0, 0, .05);
+    }
+
+    .search-input{
+        width: 100%;
+        padding-right: 4rem;
+    }
+
+    .search-form:focus-within {
+        border-color: var(--color-primary);
+        background-color: var(--color-white);
+    }
+
+    .search-form:focus-within .search-button {
+        border-color: var(--color-primary);
+    }
+</style>
+```
