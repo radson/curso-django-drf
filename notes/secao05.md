@@ -356,7 +356,7 @@ Aplicar um layout e estilo para o Header
 No arquivo ```head.html``` incluir referencias para a fonte *Roboto Slab* do Google, após as referencias do Font-awesome
 
 ```Html
- <!--> Código anterior omitido <-->
+ <!-- Omitido código sem alteração -->
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -511,7 +511,7 @@ No arquivo ```head.html``` alterar o backgrou para a class ```body``` e criar no
 
 ```Html
 <style>
-    /*Omitido texto sem alteração*/
+    /*Omitido código sem alteração*/
 
     body{
             font-size: 1.6rem;
@@ -563,3 +563,56 @@ No arquivo ```head.html``` alterar o backgrou para a class ```body``` e criar no
     }
 </style>
 ```
+
+## 32. Criando a grid de conteúdo
+
+### Objetivos
+
+Criar a grid que vai exibir os cards com as receitas
+
+### Etapas
+
+Mover o conteúdo do container search para uma partials em ```templates/partials/search.html```
+
+```Html
+<div class="search-container">
+    <div class="container">
+        <form action="" class="search-form">
+            <input type="search" class="search-input" name="search">
+            <button type="submit" class="search-button"><i class="fa-solid fa-search"></i></button>
+        </form>
+    </div>
+</div>
+```
+
+Alterar o ```home.html``` para fazer include do ```search.html``` e incluir novos containers referentes ao grid das receitas.
+
+```Html
+<!-- Omitido código sem alteração  -->
+{% include 'recipes/partials/search.html' %}
+
+<main class="main-content-container">   
+    <div class="main-content main-content-list container">
+
+    </div>
+</main>
+```
+
+No arquivo ```head.html``` incluir novos estilos para o grid.
+
+```Html
+<style>
+    /*Omitido código sem alteração*/
+
+    .main-content {
+        padding-top: 0;
+    }
+
+    .main-content-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+        gap: var(--spacing-gutter-large);
+    }
+</style>
+```
+
