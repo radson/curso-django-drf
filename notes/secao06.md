@@ -7,3 +7,7 @@ Arquivos estáticos são arquivos que são entregues exatamente como estão salv
 Frequentemente, sites adicionam seu conteúdo estático em CDNs (Content Delivery Network) que são servidores otimizados para entrega de arquivos estáticos tanto em velocidade de entrega quando em manter os arquivos na localização mais próxima do usuário final.
 
 O Django consegue lidar com arquivos estáticos no seu servidor ou em CDNs.
+
+## 38. Uma longa descrição sobre arquivos estáticos
+
+* Explicação da necessidade de organizar imports e CSS no head do projeto em arquivos estáticos.
