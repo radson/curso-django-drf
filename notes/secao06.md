@@ -55,3 +55,23 @@ No arquivo ```head.html``` será adicionada a referência ao novo arquivo ```sty
 ### Etapas
 
 No ```settings.py``` a lista ```STATICFILES_DIRS``` permite adicionar o caminho de outros diretórios para arquivos estáticos além do caminho padrão que o Django usa.
+
+## 41. STATIC_ROOT e collectstatic
+
+### Objetivos
+
+* Feature do Django que permite que os arquivo estáticos sejam organizados em um só lugar para facilitar o deploy.
+
+### Etapas
+
+No ```settings.py``` setar a variável ```STATIC_ROOT```, que é o caminho do diretório onde devem ser copiados todos os arquivos estáticos do projeto.
+
+```Python
+STATIC_ROOT = BASE_DIR / 'static'
+```
+
+Executar o comando ```collectstatic``` que irá copiar todos os diretórios e arquivos estáticos tanto do diretório ```static``` quanto dos diretórios definidos em ```STATICFILES_DIRS```.
+
+```Shell
+python manage.py collectstatic
+```
