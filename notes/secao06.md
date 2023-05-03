@@ -11,3 +11,37 @@ O Django consegue lidar com arquivos estáticos no seu servidor ou em CDNs.
 ## 38. Uma longa descrição sobre arquivos estáticos
 
 * Explicação da necessidade de organizar imports e CSS no head do projeto em arquivos estáticos.
+
+## 39. Adicionando Static Files em Recipes para o CSS
+
+### Objetivos
+
+* Implementando os arquivos estáticos no projeto
+
+### Etapas
+
+O Django já vem preparado para reconhecer o diretório ```static``` na raiz do projeto ver mais em [arquivos estáticos](https://docs.djangoproject.com/en/3.2/howto/static-files/). Usando o mesmo conceito de namespacing, será adicionado um subdiretório com o nome do app onde podem conter arquivos estáticos de estilo, javascript ou imagens.
+
+```Bash
+mkdir -p recipes/static/recipes/css
+> recipes/static/recipes/css/style.css
+```
+
+O conteúdo que estava na tag ```style``` no arquivo parcial ```head.html``` será movido para um novo arquivo ```style.css``` dentro do diretório recem criado.
+
+No arquivo ```head.html``` será adicionada a referência ao novo arquivo ```style.css``` usando a tag ```static``` do Django. 
+
+```Django
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+   <!-- omitido código sem alteração -->
+
+    <link rel="stylesheet" href={% static 'recipes/css/styles.css' %}>
+    
+    <title>Recipes</title>
+</head>
+```
