@@ -45,3 +45,13 @@ No arquivo ```head.html``` será adicionada a referência ao novo arquivo ```sty
     <title>Recipes</title>
 </head>
 ```
+
+## 40. STATIC_URL e STATICFILES_DIRS no Django
+
+### Objetivos
+
+* Usando outra forma de utilizar arquivos estáticos que não associadas a uma aplicação.
+
+### Etapas
+
+No ```settings.py``` a lista ```STATICFILES_DIRS``` permite adicionar o caminho de outros diretórios para arquivos estáticos além do caminho padrão que o Django usa.
