@@ -85,4 +85,65 @@ def recipe(request, id):
     return render(request, 'recipes/pages/recipe-view.html')
 ```
 
+## 44. Herança em templates e template blocks
 
+### Objetivos
+
+* Reutilização de código nos templates, criando uma base que será reutilizada nos demais templates.
+
+### Etapas
+
+Usando o conceito de [herança de templates](https://docs.djangoproject.com/pt-br/3.2/ref/templates/language/#template-inheritance) do Django, copiar o conteúdo do template `recipes/pages/home.html` para o arquivo `base_templates/global/base.html`, onde será definido um bloco `content` que poderá ser expandido pelos templates que o referenciarem, conforme a seguir:
+
+```Django
+{% include 'recipes/partials/head.html' %}
+
+    <body>
+        {% include 'recipes/partials/header.html' %}
+
+        {% include 'recipes/partials/search.html' %}
+
+        <main class="main-content-container">
+            {% block content %}
+            
+            {% endblock content %}
+        </main>
+
+        {% include 'recipes/partials/footer.html' %}
+
+    </body>
+</html>
+```
+
+O arquivo `recipes/pages/home.html` terá apenas o conteúdo que não é comum ao `base.html`.
+
+```Django
+{% extends 'global/base.html' %}
+
+{% block content %}
+    <div class="main-content main-content-list container">
+        {% include 'recipes/partials/recipe.html' %}
+        {% include 'recipes/partials/recipe.html' %}
+        {% include 'recipes/partials/recipe.html' %}
+        {% include 'recipes/partials/recipe.html' %}
+        {% include 'recipes/partials/recipe.html' %}
+        {% include 'recipes/partials/recipe.html' %}
+        {% include 'recipes/partials/recipe.html' %}
+        {% include 'recipes/partials/recipe.html' %}
+        {% include 'recipes/partials/recipe.html' %}
+    </div>
+{% endblock content %}
+```
+
+O arquivo `recipes/pages/recipe-view.html` seguirá o mesmo modelo.
+
+```Django
+{% extends 'global/base.html' %}
+
+{% block content %}
+    <div class="main-content main-content-detail container">
+        {% include 'recipes/partials/recipe.html' %}
+
+    </div>
+{% endblock content %}
+```
