@@ -33,3 +33,56 @@ def recipe(request, id):
     return render(request, 'recipes/pages/home.html')
 ```
 
+## 43. Separando os templates de home e recipe
+
+### Objetivos
+
+* Criar um novo template para a recipe
+
+### Etapas
+
+Criar um novo template com base no `recipes/pages/home.html` no mesmo diretório com nome `recipe-view.html`. Alterar a classe do container para `main-content-detail`. Remover outros cards de recipe e deixar apenas um.
+
+```Django
+{% include 'recipes/partials/head.html' %}
+
+    <body>
+        {% include 'recipes/partials/header.html' %}
+
+        {% include 'recipes/partials/search.html' %}
+
+        <main class="main-content-container">   
+            <div class="main-content main-content-detail container">
+                {% include 'recipes/partials/recipe.html' %}
+
+            </div>
+        </main>
+
+        {% include 'recipes/partials/footer.html' %}
+        
+    </body>
+</html>
+```
+
+Alterar o `style.css` para centralizar o card e aumentar a largura. Para isso adicionar o estilo para a class `.recipe-list-item` que for filha de `.main-content-detail`.
+
+```Css
+.main-content-detail .recipe-list-item {
+    max-width: 84rem;
+    margin: 0 auto;
+}
+
+.main-content-detail .recipe-list-item:hover {
+    transform: scale(1);
+    box-shadow: -5px 5px 15px rgba(0, 0, 0, 0.2);
+}
+```
+
+Em ```views.py``` alterar o nome do template para o novo criado `recipe-view.html`.
+
+```Python
+def recipe(request, id):
+    return render(request, 'recipes/pages/recipe-view.html')
+```
+
+
