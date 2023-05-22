@@ -216,3 +216,146 @@ O arquivo `recipes/pages/recipe-view.html` seguirá o mesmo modelo (usando uma s
 
 {% block content %}
 ```
+
+## 46. Injetando dados na lista da view Home
+
+### Objetivos
+
+* Inserindo informações da receita para aparecer nos cards
+
+### Etapas
+
+Para gerar dados fictícios das receitas e os metadados dos cards, será utilizado o pacote [Faker](https://pypi.org/project/Faker/), que deve ser instalado no venv:
+
+```Bash
+pip install faker
+```
+
+No diretório raiz do projeto (no mesmo nível onde está `manage.py`), será criado o diretório `utils` com um script que usando o Faker irá produzir as informaçoes de acordo com o modelo apresentado.
+
+```Bash
+mkdir -p utils/recipes
+touch utils/recipes/factory.py
+```
+
+O ```factory.py``` deverá ter o conteúdo a seguir:
+
+```Python
+from random import randint
+from faker import Faker
+
+def rand_ratio():
+    return randint(840, 900), randint(473, 573)
+
+fake = Faker('pt_BR')
+
+def make_recipe():
+    return {
+        'title': fake.sentence(nb_words=6),
+        'description': fake.sentence(nb_words=12),
+        'preparation_time': fake.random_number(digits=2, fix_len=True),
+        'preparation_time_unit': 'Minutos',
+        'servings': fake.random_number(digits=2, fix_len=True),
+        'servings_unit': 'Porção',
+        'preparation_steps': fake.text(3000),
+        'created_at': fake.date_time(),
+        'author': {
+            'first_name': fake.first_name(),
+            'last_name': fake.last_name(),
+        },
+        'category': {
+            'name': fake.word()
+        },
+        'cover': {
+            'url': 'https://loremflickr.com/%s/%s/food,cook' % rand_ratio(),
+        }
+    }
+
+if __name__ == '__main__':
+    from pprint import pprint
+    pprint(make_recipe())
+```
+
+Na views o `factory` será importado para fornecer os dados para os templates.
+
+```Python
+from utils.recipes.factory import make_recipe
+
+def home(request):
+    return render(request, 'recipes/pages/home.html', context={
+        'recipes': [make_recipe() for _ in range(10)],
+    })
+
+def recipe(request, id):
+    return render(request, 'recipes/pages/recipe-view.html', context={
+        'recipe': make_recipe(),
+    })
+```
+
+No template `home.html` o bloco content poderá iterar sobre as recipes que vieram no contexto
+
+```Django
+{% block content %}
+    <div class="main-content main-content-list container">
+        {% for recipe in recipes %}
+            {% include 'recipes/partials/recipe.html' %}
+        {% endfor %}
+    </div>
+{% endblock content %}
+```
+
+No template `partials/recipe.html` os dados estáticos devem ser substituídos pelos que serão fornecidos na variável de contexto, conforme o modelo definido no `factory.py`.
+
+```Django
+<div class="recipe recipe-list-item">
+    <div class="recipe-cover">
+        <img src="{{ recipe.cover.url }}" alt="Temporário">
+    </div>
+    <div class="recipe-title-container">
+        <h2 class="recipe-title">{{ recipe.title }}</h2>
+    </div>
+    <div class="recipe-author">
+        <span class="recipe-author-item">
+            <i class="fa-solid fa-user"></i>
+            {{ recipe.author.first_name }} {{ recipe.author.last_name }}
+        </span>
+        <span class="recipe-author-item">
+            <i class="fa-solid fa-calendar-alt"></i>
+            {{ recipe.created_at|date:"d/m/Y"}} às {{ recipe.created_at|date:"H:i"}}
+        </span>
+        <span class="recipe-author-item">
+            <a href="/recipes/category/cafe-da-manha/">
+                <i class="fa-solid fa-layer-group"></i>
+                <span>{{ recipe.category.name }}</span>
+            </a>
+        </span>
+    </div>
+
+    <div class="recipe-content">
+        <p>{{ recipe.description}}</p>
+    </div>
+
+    <div class="recipe-meta-container">
+        <div class="recipe-meta recipe-preparation">
+            <h3 class="recipe-meta-title"><i class="fa-solid fa-stopwatch"></i> Preparo</h3>
+            <div class="recipe-meta-text">
+                {{ recipe.preparation_time }} {{ recipe.preparation_time_unit }}
+            </div>
+        </div>
+
+        <div class="recipe-meta recipe-servings">
+            <h3 class="recipe-meta-title"><i class="fa-solid fa-pizza-slice"></i> Porções</h3>
+            <div class="recipe-meta-text">
+                {{ recipe.servings }} {{ recipe.servings_unit }}
+            </div>
+        </div>
+       
+    </div>
+    <footer class="recipe-footer">
+        <a href="" class="recipe-read-more button button-dark button-full-width">
+            <i class="fa-solid fa-eye"></i>
+            <span>ver mais...</span>
+        </a>
+    </footer>
+</div>
+```
