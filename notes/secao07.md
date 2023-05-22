@@ -359,3 +359,20 @@ No template `partials/recipe.html` os dados estáticos devem ser substituídos p
     </footer>
 </div>
 ```
+
+## 47. Corrigindo a altura dos cards de recipes e adicionando a imagem
+
+### Objetivos
+
+* Corrigindo altura dos cards no CSS
+
+### Etapas
+
+Em `recipes/static/recipes/css/style.css` alterar o a classe `recipe-list-item`.
+
+```Css
+.recipe-list-item {
+    max-width: 64rem;
+    height: fit-content;
+}
+```
