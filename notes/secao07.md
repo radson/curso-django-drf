@@ -376,3 +376,48 @@ Em `recipes/static/recipes/css/style.css` alterar o a classe `recipe-list-item`.
     height: fit-content;
 }
 ```
+
+## 48. Trabalhando nas diferenças entre detail page e list page
+
+### Objetivos
+
+* Implementando um mecanismo que permita idenfiticar quando se está em cada uma das páginas.
+
+### Etapas
+
+No `views.py`, na view `recipe` adicionar uma variável no contexto `is_detail_page` com valor `True` que irá servir como flag de quando se está nesta página. Quando estiver na outra view, esta variável não irá existir mas não vai causar falha no funcionamento da página.
+
+```Python
+def recipe(request, id):
+    return render(request, 'recipes/pages/recipe-view.html', context={
+        'recipe': make_recipe(),
+        'is_detail_page': True,
+    })
+```
+
+No template `recipe.html`, a tag `footer` irá ficar dentro de uma estrutura de seleção `if` disponível na linguagem de templates do Django. Quando a variável `is_detail_page` estiver vazia ou não for `True` o botão para exibir mais informações irá aparecer, no caso da view `home`. Quando estiver na view `recipe` a variável irá permitir exibir o campo `preparation_steps`.
+
+```Django
+{% if is_detail_page is not True %}
+    <footer class="recipe-footer">
+        <a href="" class="recipe-read-more button button-dark button-full-width">
+            <i class="fa-solid fa-eye"></i>
+            <span>ver mais...</span>
+        </a>
+    </footer>
+{% endif %}
+
+{% if is_detail_page is True %}
+    <div class="preparation-steps">
+        {{ recipe.preparation_steps|linebreaksbr }}
+    </div>
+{% endif %}
+```
+
+Para melhor exibição do texto do `preparation_steps`, deve-se incluir a classe respectiva da div no arquivo de estilo.
+
+```Css
+.preparation-steps{
+    padding: var(--spacing-gutter-medium);
+}
+```
