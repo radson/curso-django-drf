@@ -421,3 +421,78 @@ Para melhor exibição do texto do `preparation_steps`, deve-se incluir a classe
     padding: var(--spacing-gutter-medium);
 }
 ```
+
+## 49. Nome único nas URLs e app_name para Namespace
+
+### Objetivos
+
+* Implementando recurso de nomes para urls e uso de namespace.
+
+### Etapas
+
+No arquivo de rotas `recipes/url.py` adicionar a variável `app_name` que identifica o namespace e adicionar o parametro `name` com um nome único para cada url da lista.
+
+```Python
+app_name = 'recipes'
+
+urlpatterns = [
+    path('', views.home, name='home'),
+    path('recipes/<int:id>/', views.recipe, name='recipe'),
+]
+```
+
+No template `header.html` atualizar o link da classe `main-logo`, onde a tag url do Django recebe o namespace e o nome da view separados por `:`.
+
+```Django
+<a class="main-logo" href={% url 'recipes:home' %}>
+```
+
+No template `recipe.html` atualizar os links nas divs `recipe-cover`, `recipe-title-container` e no footer `recipe-footer`. Estes irão receber a URL e um parametro adicional que será a ID da receita.
+
+```Django
+<!-- omitido código sem alteração -->
+<div class="recipe-cover">
+    <a href={% url 'recipes:recipe' recipe.id %}>
+        <img src="{{ recipe.cover.url }}" alt="Temporário">
+    </a>
+</div>
+<div class="recipe-title-container">
+    <h2 class="recipe-title">
+        <a href={% url 'recipes:recipe' recipe.id %}>
+            {{ recipe.title }}
+        </a>
+    </h2>
+</div>
+
+<!-- omitido código sem alteração -->
+
+<footer class="recipe-footer">
+    <a href={% url 'recipes:recipe' recipe.id %} class="recipe-read-more button button-dark button-full-width">
+        <i class="fa-solid fa-eye"></i>
+        <span>ver mais...</span>
+    </a>
+</footer>
+
+<!-- omitido código sem alteração -->
+```
+
+Para que exista a ID nos links será necessário atualizar o `utils/recipes/factory.py` adicionando este campo no dicionário.
+
+```Python
+#omitido codigo sem alteração
+def make_recipe():
+    return {
+        'id': fake.random_number(digits=2, fix_len=True),
+#omitido codigo sem alteração
+```
+
+No arquivo de estilos, abaixo da class `recipe-title-container` adicionar uma formatação para quando houver um link.
+
+```Css
+/* omitido codigo sem alteracao */
+.recipe-title-container a {
+    text-decoration: none;
+    color: var(--color-primary-dark);
+}
+/* omitido codigo sem alteracao */
+```
