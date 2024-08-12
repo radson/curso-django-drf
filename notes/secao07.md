@@ -735,3 +735,8 @@ other_category.delete()  # Deleta no banco de dados
 ```
 Conceito de [Lazy QuerySet](https://docs.djangoproject.com/pt-br/3.2/topics/db/queries/#querysets-are-lazy)
 [Django Shell](https://docs.djangoproject.com/pt-br/3.2/ref/django-admin/#shell)
+
+## 57. Recomendação de leitura - QuerySet API reference
+
+[QuerySet API reference](https://docs.djangoproject.com/pt-br/3.2/ref/models/querysets/)
+
