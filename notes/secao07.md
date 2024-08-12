@@ -637,5 +637,56 @@ class Category(models.Model):
 #omitido codigo sem alteração
 ```
 
+## 55. Adicionando Recipes na admin do Django
 
+### Objetivos
 
+* Usando a área administrativa do Django.
+* Registrando Recipes usando decorator
+
+### Etapas
+
+Registrar o model `Recipe` na área administrativa do Django, utilizando recurso de decorator.
+
+```Python
+#omitido codigo sem alteração
+from .models import  Recipe
+
+#omitido codigo sem alteração
+
+@admin.register(Recipe)
+class RecipeAdmin(admin.ModelAdmin):
+    ...
+```
+
+No `settings.py`, definir as variáveis MEDIA_URL e MEDIA_ROOT para onde serão salvas as imagens inseridas no campo ImageField. 
+
+```Python
+#omitido codigo sem alteração
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+```
+
+No arquivo `urls.py` do projeto,  definir a URL estática para que o Django saiba onde salvar e onde ler os arquivos de imagens. Atenção para boa prática no uso do pacote `settings` do Django quando for acessar conteúdo do arquivo `settings.py`. 
+
+```Python
+from django.conf import settings
+from django.conf.urls.static import static
+
+#omitido codigo sem alteração
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+```
+
+Definir o método `__str__` para o model `Recipe`, tambem chamado de método *Dunder* no Django.
+
+```Python
+#omitido codigo sem alteração
+class Recipe(models.Model):
+    
+    #omitido codigo sem alteração
+
+    def __str__(self):
+        return self.title
+```
