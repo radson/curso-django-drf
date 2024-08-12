@@ -578,3 +578,15 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 Após esta etapa, os models estarão no banco de dados como tabelas.
+
+
+## 53. Recomendação de leitura - Django Model field reference
+
+### Objetivos
+
+* Recomendação de leitura - Django Model field.
+
+### Etapas
+
+[Django Model field reference](https://docs.djangoproject.com/pt-br/3.2/ref/models/fields/)
+Existem vários campos e várias opções para cada um deles. Documentação oficial para entender melhor as possibilidades de tipos de dados para cada um dos campos desejados.
