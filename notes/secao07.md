@@ -496,3 +496,15 @@ No arquivo de estilos, abaixo da class `recipe-title-container` adicionar uma fo
 }
 /* omitido codigo sem alteracao */
 ```
+
+## 50. Sobre Programação Orientada a Objetos (POO)
+
+### Objetivos
+
+* Introdução sobre POO e playlist de apoio.
+
+### Etapas
+
+A partir dessa parte do curso, muitos assuntos relacionados a POO (Programação Orientada a Objetos) serão usados. Isso porque o Django usa muito o conceito de classes. Models usam classes, Class Based Views, tem classe até no nome, forms também usam classes, além de várias outras partes que eu devo estar me esquecendo.
+
+[Playlist sobre POO](https://youtube.com/playlist?list=PLbIBj8vQhvm34qAAEEH_PdL2tMG9rz-P7).
