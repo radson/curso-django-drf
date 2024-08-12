@@ -508,3 +508,33 @@ No arquivo de estilos, abaixo da class `recipe-title-container` adicionar uma fo
 A partir dessa parte do curso, muitos assuntos relacionados a POO (Programação Orientada a Objetos) serão usados. Isso porque o Django usa muito o conceito de classes. Models usam classes, Class Based Views, tem classe até no nome, forms também usam classes, além de várias outras partes que eu devo estar me esquecendo.
 
 [Playlist sobre POO](https://youtube.com/playlist?list=PLbIBj8vQhvm34qAAEEH_PdL2tMG9rz-P7).
+
+## 51. Primeiro Django Model e seus atributos
+
+### Objetivos
+
+* Explicando o models no Django.
+
+### Etapas
+
+No arquivo `recipe/models.py` são declaradas as classes que modelam as tabelas e colunas no banco de dados. O Django já fornece atritubos específicos para hedado de `models.Model` que são traduzidos para cada tipo de banco de dados. A modelam inicial para a classe `Recipe` fica como a seguir;
+
+```Python
+from django.db import models
+
+
+class Recipe(models.Model):
+    title = models.CharField(max_length=65)
+    description = models.CharField(max_length=165)
+    slug = models.SlugField()
+    preparation_time = models.IntegerField()
+    preparation_time_unit = models.CharField(max_length=65)
+    servings = models.IntegerField()
+    servings_unit = models.CharField(max_length=65)
+    preparation_steps = models.TextField()
+    preparation_steps_is_html = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    is_published = models.BooleanField(default=False)
+    cover = models.ImageField(upload_to='recipes/covers/%Y/%m/%d/')
+```
