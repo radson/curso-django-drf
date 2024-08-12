@@ -538,3 +538,43 @@ class Recipe(models.Model):
     is_published = models.BooleanField(default=False)
     cover = models.ImageField(upload_to='recipes/covers/%Y/%m/%d/')
 ```
+
+## 52. makemigrations e migrate - Aplicando as migrações
+
+### Objetivos
+
+* Continuando modelagem da aula anterior e incluindo recurso de relação entre classes (tabelas no banco de dados) e migrações.
+
+### Etapas
+
+Cada receita deve ter uma categoria, para representar essa relação, foi adicionada uma classe `Category` que será relacionada com a `Recipe` através do campo `ForeignKey`. 
+
+Para o autor, utilizou-se a classe `User` que já existe no Django. 
+
+```Python
+#omitido codigo sem alteração
+from django.contrib.auth.models import User
+
+class Category(models.Model):
+    name = models.CharField(max_length=65)
+
+
+class Recipe(models.Model):
+    #omitido codigo sem alteração
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+```
+
+Instalar o pacote Pillow requerido pelo campo ImageField do Django. Requisito antes de executar a migration.
+
+```Bash
+pip install pillow
+```
+
+Para realizar as sincronização com o banco de dados, é necessário gerar as migrations e em seguida aplicar no banco de dados. Usando os comandos a seguir:
+
+```Bash
+python manage.py makemigrations
+python manage.py migrate
+```
+Após esta etapa, os models estarão no banco de dados como tabelas.
