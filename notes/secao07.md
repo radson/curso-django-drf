@@ -590,3 +590,52 @@ Após esta etapa, os models estarão no banco de dados como tabelas.
 
 [Django Model field reference](https://docs.djangoproject.com/pt-br/3.2/ref/models/fields/)
 Existem vários campos e várias opções para cada um deles. Documentação oficial para entender melhor as possibilidades de tipos de dados para cada um dos campos desejados.
+
+## 54. Registrando category na admin do Django
+
+### Objetivos
+
+* Usando a área administrativa do Django.
+
+### Etapas
+
+Para acessar a área administrativa, é necessário gerar usuário e senha:
+
+```Bash
+python manage.py createsuperuser
+```
+
+Em seguida, acessar área administrativa no endereço:
+
+`http://localhost:8000/admin`
+
+Por default estão registrados os models internos do Django: User e Group. Para adicionar os models da aplicação é necessário registrá-los no arquivo `recipes/admin.py`. Abaixo um exemplo básico que registra o model `Category` com as configurações default do Django.
+
+```Python
+from django.contrib import admin
+
+from .models import Category
+
+
+class CategoryAdmin(admin.ModelAdmin):
+    ...
+
+admin.site.register(Category, CategoryAdmin)
+```
+
+Para melhorar a exibição do model, ajusta a representacão como string, indicando qual campo deve aparecer (no caso o campo name), no arquivo `models.py`.
+
+```Python
+#omitido codigo sem alteração
+
+class Category(models.Model):
+    name = models.CharField(max_length=65)
+
+    def __str__(self):
+        return self.name
+
+#omitido codigo sem alteração
+```
+
+
+
