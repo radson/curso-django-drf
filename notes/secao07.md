@@ -740,3 +740,104 @@ Conceito de [Lazy QuerySet](https://docs.djangoproject.com/pt-br/3.2/topics/db/q
 
 [QuerySet API reference](https://docs.djangoproject.com/pt-br/3.2/ref/models/querysets/)
 
+## 58. Usando o model Recipe real (com QuerySet) na view home
+
+### Objetivos
+
+* Buscar registro de Recipes do banco de dados em vez de usar dados gerados.
+
+### Etapas
+
+Mudar view para buscar objetos no banco de dados. Buscando `Recipes` e `Category` usando o ORM e passando no contexto para o template.
+
+```Python
+#omitido codigo sem alteração
+from recipes.models import Recipe
+
+def home(request):
+    recipes = Recipe.objects.all().order_by('-id')
+    return render(request, 'recipes/pages/home.html', context={
+        'recipes': recipes,
+    })
+
+def category(request, category_id):
+    recipes = Recipe.objects.filter(
+        category__id=category_id
+    ).order_by('-id')
+    return render(request, 'recipes/pages/home.html', context={
+        'recipes': recipes,
+    })
+
+#omitido codigo sem alteração
+```
+
+No `urls.py` de `recipe`, adicionar rota para `category` quando passar o `id` como parametro.
+
+```Python
+#omitido codigo sem alteração
+urlpatterns = [
+    #omitido codigo sem alteração
+    path('recipes/category/<int:category_id>/', views.category, name='category'),
+]
+```
+
+Alterar template `recipe/recipe.html` para os seguintes casos:
+* Quando o usuário não submeter uma imagem;
+* Exibir o username quando os campos first_name e last_name estiverem vazios;
+* Pegar a category dinamicamente do banco de dados.
+
+```Django
+<!-- omitido codigo sem alteração -->
+<div class="recipe recipe-list-item">
+    {% if recipe.cover %}
+        <div class="recipe-cover">
+            <a href={% url 'recipes:recipe' recipe.id %}>
+                <img src="{{ recipe.cover.url }}" alt="Temporário">
+            </a>
+        </div>
+    {% endif %}
+    <div class="recipe-title-container">
+        <h2 class="recipe-title">
+            <a href={% url 'recipes:recipe' recipe.id %}>
+                {{ recipe.title }}
+            </a>
+        </h2>
+    </div>
+    <div class="recipe-author">
+        <span class="recipe-author-item">
+            <i class="fa-solid fa-user"></i>
+            {% if recipe.author.first_name %}
+                {{ recipe.author.first_name }} {{ recipe.author.last_name }}
+            {% else %}
+                {{ recipe.author.username }}
+            {% endif %}
+        </span>
+        <span class="recipe-author-item">
+            <i class="fa-solid fa-calendar-alt"></i>
+            {{ recipe.created_at|date:"d/m/Y"}} às {{ recipe.created_at|date:"H:i"}}
+        </span>
+        <span class="recipe-author-item">
+            <a href="{% url 'recipes:category' recipe.category.id %}">
+                <i class="fa-solid fa-layer-group"></i>
+                <span>{{ recipe.category.name }}</span>
+            </a>
+        </span>
+    </div>
+    <!-- omitido codigo sem alteração -->
+```
+
+Alterar o campo `cover` da classe `Recipe` em `models.py` para permitir que seja vazio.
+
+```Python
+class Recipe(models.Model):
+    # omitido codigo sem alteração
+    cover = models.ImageField(upload_to='recipes/covers/%Y/%m/%d/', blank=True, default='')
+    # omitido codigo sem alteração
+```
+
+Sincronizar o banco de dados.
+
+```Bash
+python manage.py makemigrations
+python manage.py migrate
+```
