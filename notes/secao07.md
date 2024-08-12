@@ -883,3 +883,46 @@ def category(request, category_id):
     })
 # omitido codigo sem alteração
 ```
+
+## 60. Corrigindo category com blank True e default None
+
+### Objetivos
+
+* Corrigir para permitir editar uma receita fique sem categoria.
+
+### Etapas
+
+Ao permitir que uma categoria seja excluída, a modelagem atual deixa o campo como Null, porém o Recipe não pode ser editado para ser atribuída uma outra categoria. Para isso será necessário alterar o model para permitir que o campo fique sem preencher.
+
+Em `models.py` adicionar `blank=True` e `default=None` no campo `category` da classe `Recipe`:
+
+```Python
+class Recipe(models.Model):
+    # omitido codigo sem alteração
+    category = models.ForeignKey(
+        Category, on_delete=models.SET_NULL, null=True, blank=True, default=None
+    )
+    # omitido codigo sem alteração
+```
+
+Sincronizar banco de dados:
+
+```Bash
+python manage.py makemigrations
+python manage.py migrate
+```
+
+Ajustar template `recipe.html` com uma verificação que permite apenas exibir quando o campo não for `None`.
+
+```Django
+<!-- omitido codigo sem alteração -->
+{% if recipe.category is not None %}
+    <span class="recipe-author-item">
+        <a href="{% url 'recipes:category' recipe.category.id %}">
+            <i class="fa-solid fa-layer-group"></i>
+            <span>{{ recipe.category.name }}</span>
+        </a>
+    </span>
+{% endif %}
+<!-- omitido codigo sem alteração -->
+```
