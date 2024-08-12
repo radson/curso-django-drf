@@ -841,3 +841,45 @@ Sincronizar o banco de dados.
 python manage.py makemigrations
 python manage.py migrate
 ```
+
+## 59. Ocultando receitas que não estão publicadas (filter para is_published)
+
+### Objetivos
+
+* Usar o campo `is_published` no template.
+
+### Etapas
+
+Adicionar um novo template para exibir as categorias de receitas criando o arquivo em `recipes/templates/recipes/pages/category.html` com o conteúdo.
+
+```Django
+{% extends 'global/base.html' %}
+
+{% block title %}Category |{% endblock title %}
+
+{% block content %}
+    <div class="main-content main-content-list container">
+        {% for recipe in recipes %}
+            {% include 'recipes/partials/recipe.html' %}
+        {% endfor %}
+    </div>
+{% endblock content %}
+```
+
+Em `views.py` alterar a view `home` e `category` passando o filtro `is_published=True` para retornar apenas as receitas que correspondam a esse critério. Adicionalmente, alterar o template da view `category` para o criado anteriormente.
+
+```Python
+# omitido codigo sem alteração
+def home(request):
+    recipes = Recipe.objects.filter(is_published=True).order_by('-id')
+    
+def category(request, category_id):
+    recipes = Recipe.objects.filter(
+        category__id=category_id,
+        is_published=True
+    ).order_by('-id')
+    return render(request, 'recipes/pages/category.html', context={
+        'recipes': recipes,
+    })
+# omitido codigo sem alteração
+```
