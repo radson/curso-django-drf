@@ -690,3 +690,48 @@ class Recipe(models.Model):
     def __str__(self):
         return self.title
 ```
+
+
+## 56. Conhecendo o Django Shell e manipulando QuerySets com ele
+
+### Objetivos
+
+* Utilizando o recurso Django Shell para manipular models
+* Shell interativo do Python para carregar os models
+
+### Etapas
+
+```Bash
+python manage.py shell
+```
+
+No prompt do Python, é possível importar os models para manipula-los. Os models já possuem um manager (objects, no código a seguir) que transforma as interações em consultas SQL. Managers customizados podem ser criados, mas o Django já fornece uma solução bem completa.
+
+```Python
+from recipes.models import Recipe, Category
+categories = Category.objects.all() # Retorna todos os objetos
+print(categories)
+categories.order_by('id') # Usa os recursos no manager para ordenar pelo ID
+categories.order_by('-id') # Ordenação inversa pelo ID
+categories.order_by('id', '-name') # Ordenação usando 2 campos
+recipes = Recipe.objects.all()
+print(recipes)
+for recipe in recipes: print(recipe.id, recipe.title)
+for recipe in recipes.order_by('-id'): print(recipe.id, recipe.title)
+recipe = recipes.order_by('-id').first() # Retorna apenas o primeiro da QuerySet
+recipe._meta.get_fields() #Para descobrir os campos de uma instância de objeto
+
+new_category = Category() # QuerySets usa o conceito de Lazy QuerySet
+new_category.name = 'Nova categoria' # Atribuindo valor
+new_category.save() # Salvando no banco de dados
+new_category.id # Verificando o ID do registro salvo
+
+new_category = Category.objects.create(name='Nova categoria de comida') # Não usa Lazy QuerySet
+
+other_category = Category.objets.get(id=1) # Busca objeto com ID=1
+other_category.name = 'Outra categoria'
+other_category.save() # Atualiza a instancia no banco de dados
+other_category.delete()  # Deleta no banco de dados
+```
+Conceito de [Lazy QuerySet](https://docs.djangoproject.com/pt-br/3.2/topics/db/queries/#querysets-are-lazy)
+[Django Shell](https://docs.djangoproject.com/pt-br/3.2/ref/django-admin/#shell)
