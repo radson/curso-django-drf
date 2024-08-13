@@ -676,3 +676,52 @@ Ajustar o `styles.css` para melhorar exibição da mensagem no `h1`.
     margin: var(--spacing-gutter-medium) 0;
 }
 ```
+
+## 69. Renomeando um projeto Django inteiro
+
+### Objetivos
+
+* Mostrando como alterar o nome de um projeto. 
+* Corrigir nome `projeto` em portugues e app `recipes` em ingles.
+
+### Etapas
+
+Alterar a string `projeto` para `projects` na lista de arquivos a seguir, desconsiderar as demais linhas que permaneceram inalteradas.
+
+`projeto/asgi.py`
+
+```Python
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project.settings')
+```
+
+`projeto/wsgi.py`
+
+```Python
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project.settings')
+```
+
+`projeto/settings.py`
+
+```Python
+ROOT_URLCONF = 'project.urls'
+
+WSGI_APPLICATION = 'project.wsgi.application'
+```
+
+`manage.py`
+
+```Python
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project.settings')
+```
+
+Por fim, renomear o diretório `projeto` que está no mesmo nível de `recipes`:
+
+```Bash
+mv projeto project
+```
+
+Executa novamente o projeto para certificar que esta tudo funcionando:
+
+```Bash
+python manage.py runserver
+```
