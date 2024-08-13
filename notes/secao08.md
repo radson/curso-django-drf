@@ -632,3 +632,47 @@ No template `recipe-view.html` ajustar o titulo para pegar dinamicamente.
 {% block title %}{{ recipe.title }} |{% endblock title %}
 <!-- omitido codigo sem alteração -->
 ```
+
+## 67. Usar get_list_or_404 na home ou não?
+
+### Objetivos
+
+* Ajustar a home para quando não houverem receitas cadastradas.
+
+### Etapas
+
+No template `home.html` ajustar o `for` para usar a tag `empty` quando a lista `recipes` é vazia.
+
+```Django
+<!-- omitido codigo sem alteração -->
+{% block content %}
+    <div class="main-content main-content-list container">
+        {% for recipe in recipes %}
+            {% include 'recipes/partials/recipe.html' %}
+        {% empty %}
+            <div class="center m-y">
+                <h1>No recipes found here.</h1>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}
+```
+
+Ajustar o `styles.css` para melhorar exibição da mensagem no `h1`.
+
+```Css
+/* omitido codigo sem alteração */
+/* Generics */
+
+.center {
+    text-align: center;
+}
+
+.m-x {
+    margin: 0 var(--spacing-gutter-medium);
+}
+
+.m-y {
+    margin: var(--spacing-gutter-medium) 0;
+}
+```
