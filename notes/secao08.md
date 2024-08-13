@@ -441,6 +441,7 @@ Ajustar template `recipe.html` com uma verificação que permite apenas exibir q
 Em `recipe.html`, adicionar uma verificação para quando a receita não tem um autor (campo `author` é `None`).
 
 ```Django
+<!-- omitido codigo sem alteração -->
 <div class="recipe-author">
     {% if recipe.author is not None %}
         <span class="recipe-author-item">
@@ -452,6 +453,7 @@ Em `recipe.html`, adicionar uma verificação para quando a receita não tem um 
             {% endif %}
         </span>
     {% endif %} 
+<!-- omitido codigo sem alteração -->
 ```
 Adicionalmente, segue o processo para criação de usuários via shell do Django
 
@@ -465,3 +467,41 @@ User.objects.create_user(firts_name='Maria', last_name='Helena', username='maria
 ```
 
 Se a criação for realizada com sucesso, o método `create_user` retorna a instância do usuário criado.
+
+## 62. Mostrando erro 404 Not Found para páginas que não existem
+
+### Objetivos
+
+* Adicionar tratamento de exceção para páginas inexistentes.
+* Adicionar o nome da categoria na barra de títulos para auxiliar os mecanismos de busca.
+
+### Etapas
+
+Em `views.py` adicionar tratamento para a consulta não retornar objetos `Category`. Caso retorne, pegar do primeiro elemento o campo `name`.
+
+```Python
+from django.http import Http404
+
+# omitido codigo sem alteração 
+
+def category(request, category_id):
+    # omitido codigo sem alteração 
+
+    if not recipes:
+        raise Http404('Not found.')
+
+    return render(request, 'recipes/pages/category.html', context={
+        'recipes': recipes,
+        'title': f'{recipes.first().category.name} - Category '
+    })
+
+# omitido codigo sem alteração 
+```
+
+No template `category.html`, remover a logica do template (que agora está na view - boa prática), e passar no contexto a variável `title`.
+
+```Django
+<!-- omitido codigo sem alteração -->
+{% block title %}{{ title }}{% endblock title %}
+<!-- omitido codigo sem alteração -->
+```
