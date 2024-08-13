@@ -604,3 +604,31 @@ Em `recipe/static/recipes/css/style.css` adicionar no final do arquivo, estilo p
     padding: 0 2rem;
 }
 ```
+
+## 66. Usando get_object_or_404 ao invés de fazer a consulta na mão
+
+### Objetivos
+
+* Corrigir a view `recipe` para o shortcut `get_object_or_404`.
+
+### Etapas
+
+Em `views.py` corrigir para uso do shortcut e remover o `order_by` pois não é necessário para um único objeto.
+
+```Python
+# omitido codigo sem alteração
+def recipe(request, id):
+    recipe = get_object_or_404(
+        Recipe.objects.filter(
+        pk=id, is_published=True)
+    )
+    # omitido codigo sem alteração
+```
+
+No template `recipe-view.html` ajustar o titulo para pegar dinamicamente.
+
+```Django
+<!-- omitido codigo sem alteração -->
+{% block title %}{{ recipe.title }} |{% endblock title %}
+<!-- omitido codigo sem alteração -->
+```
