@@ -533,3 +533,44 @@ def category(request, category_id):
         'title': f'{recipes[0].category.name} - Category '
     })
 ```
+
+## 64. Mostrando a página de detalhes da receita
+
+### Objetivos
+
+* Implementar a exibição de uma receita a partir do banco de dados.
+
+### Etapas
+
+Em `views.py` alterar a view que retorna uma receita, usando o shortcut `get_object_or_404`.
+
+```Python
+from django.shortcuts import get_object_or_404
+
+# omitido codigo sem alteração 
+def recipe(request, id):
+    recipe = get_object_or_404(
+        Recipe.objects.filter(
+        pk=id, is_published=True).order_by('-id')
+    )
+
+    return render(request, 'recipes/pages/recipe-view.html', context={
+        'recipe': recipe,
+        'is_detail_page': True,
+    })
+```
+
+No template `recipe.html` adicionar uma estrutura de seleção para quando for exibir HTML na página e permitir renderizar com a tag `safe`.
+
+```Django
+<!-- omitido codigo sem alteração -->
+{% if is_detail_page is True %}
+    <div class="preparation-steps">
+        {% if recipe.preparation_steps_is_html is True %}
+            {{ recipe.preparation_steps|safe }}
+        {% else %}
+            {{ recipe.preparation_steps|linebreaksbr }}
+        {% endif %}
+    </div>
+{% endif %}
+```
