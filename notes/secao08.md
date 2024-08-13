@@ -505,3 +505,31 @@ No template `category.html`, remover a logica do template (que agora está na vi
 {% block title %}{{ title }}{% endblock title %}
 <!-- omitido codigo sem alteração -->
 ```
+
+## 63. Usando o shortcut get_list_or_404 (atalho)
+
+### Objetivos
+
+* Usando shortcut para quando não existir um elemento ou lista.
+
+### Etapas
+
+O shortcut `get_list_or_404` retorna uma lista de objetos ou lança o código de erro HTTP 404. Para acessar o primeiro valor da lista, usa-se o índice 0.
+
+```Python
+from django.shortcuts import get_list_or_404, render
+
+# omitido codigo sem alteração 
+
+def category(request, category_id):
+    recipes = get_list_or_404(
+        Recipe.objects.filter(
+        category__id=category_id,
+        is_published=True).order_by('-id')
+    )
+
+    return render(request, 'recipes/pages/category.html', context={
+        'recipes': recipes,
+        'title': f'{recipes[0].category.name} - Category '
+    })
+```
