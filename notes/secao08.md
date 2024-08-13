@@ -574,3 +574,33 @@ No template `recipe.html` adicionar uma estrutura de seleção para quando for e
     </div>
 {% endif %}
 ```
+
+## 65. Ajustando o css do modo de preparo
+
+### Objetivos
+
+* Ajustando o css do modo de preparo.
+
+### Etapas
+
+Em `recipe/static/recipes/css/style.css` adicionar no final do arquivo, estilo para melhor exibição de receitas com modo de preparo com HTML.
+
+```Css
+/* omitido codigo sem alteração */
+.preparation-steps h1,
+.preparation-steps h2,
+.preparation-steps h3,
+.preparation-steps h4,
+.preparation-steps h5,
+.preparation-steps h6,
+.preparation-steps p,
+.preparation-steps pre {
+    margin: 2rem 0;
+}
+
+.preparation-steps ol,
+.preparation-steps ul{
+    margin: 2rem;
+    padding: 0 2rem;
+}
+```
