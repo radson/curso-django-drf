@@ -429,3 +429,39 @@ Ajustar template `recipe.html` com uma verificação que permite apenas exibir q
 {% endif %}
 <!-- omitido codigo sem alteração -->
 ```
+
+## 61. Corrigindo autor nulo
+
+### Objetivos
+
+* Tratar a exibição do autor da receita quando o usuário do autor é excluído.
+
+### Etapas
+
+Em `recipe.html`, adicionar uma verificação para quando a receita não tem um autor (campo `author` é `None`).
+
+```Django
+<div class="recipe-author">
+    {% if recipe.author is not None %}
+        <span class="recipe-author-item">
+            <i class="fa-solid fa-user"></i>
+            {% if recipe.author.first_name %}
+                {{ recipe.author.first_name }} {{ recipe.author.last_name }}
+            {% else %}
+                {{ recipe.author.username }}
+            {% endif %}
+        </span>
+    {% endif %} 
+```
+Adicionalmente, segue o processo para criação de usuários via shell do Django
+
+```Bash
+python manage.py shell
+```
+
+```Python
+from django.contrib.auth.models import User
+User.objects.create_user(firts_name='Maria', last_name='Helena', username='maria', email='maria@email.com', password='123456')
+```
+
+Se a criação for realizada com sucesso, o método `create_user` retorna a instância do usuário criado.
