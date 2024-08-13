@@ -725,3 +725,23 @@ Executa novamente o projeto para certificar que esta tudo funcionando:
 ```Bash
 python manage.py runserver
 ```
+
+## 70. Internacionalização, Time Zones e Tradução do Django para português - PT-BR
+
+### Objetivos
+
+* Alterar timezone e language do projeto.
+
+### Etapas
+
+No arquivo `settings.py` alterar as linhas
+
+```Python
+# omitido codigo sem alteração 
+LANGUAGE_CODE = 'pt-br'
+
+TIME_ZONE = 'America/Sao_Paulo'
+# omitido codigo sem alteração 
+```
+
+Conferir na área adminstrativa do Django que passará para portugues.
