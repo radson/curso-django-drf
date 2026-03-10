@@ -78,3 +78,22 @@ Para usar o test runner do Django.
 ```shell
 python manage.py test
 ```
+
+## 72. O que é um Test Runner?
+
+
+Na programação, um teste automatizado é formado por vários componentes, um deles é o Test Runner. Este é o componente responsável por orquestrar a execução de todos os testes automatizados do seu programa e prover uma saída para o usuário, como testes que passaram e falharam, erros e stack trace dos erros, mensagens e informações sobre esses testes.
+
+Você observou na última aula dois Test Runners diferentes, o do Unittest e o do Pytest. Mas você pode encontrar Test Runners que funcionam de maneira diferente, como via Interface Gráfica, via Web, via terminal ou integrado na IDE (ou editor de textos).
+
+Para executar o Test Runner do Pytest, use o comando:
+
+    pytest
+
+Para executar o Test Runner do Unittest (padrão do Django) use o comando:
+
+    python manage.py test
+
+Sempre com ambiente virtual ativo.
+
+A ideia de todos os Test Runners é sempre a mesma, executar e prover informações sobre os testes executados.
