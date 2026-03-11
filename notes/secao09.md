@@ -97,3 +97,30 @@ Para executar o Test Runner do Unittest (padrão do Django) use o comando:
 Sempre com ambiente virtual ativo.
 
 A ideia de todos os Test Runners é sempre a mesma, executar e prover informações sobre os testes executados.
+
+## 73. Asserções (afirmações), Django Reverse URL e Pytest-Watch
+
+### Objetivos
+
+* Iniciar a implementação dos testes usando o Django Reverse URL.
+
+### Etapas
+
+No arquivo `recipes\tests.py`, remover o teste anterior `test_the_pyteste_is_ok` e criar um novo para teste da URL home. O nome dos testes deve ser descritivo para identificar o teste, nesse caso o nome será `test_recipe_home_url_is_correct`.
+
+```Python
+from django.test import TestCase
+from django.urls import reverse
+
+
+class RecipeURLsTest(TestCase):
+    def test_recipe_home_url_is_correct(self):
+        home_url = reverse("recipes:home")
+        self.assertEqual(home_url, "/")
+```
+
+Para executar o teste, com venv ativado
+
+```shell
+pytest
+```
