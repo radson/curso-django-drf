@@ -124,3 +124,24 @@ Para executar o teste, com venv ativado
 ```shell
 pytest
 ```
+
+## 74. Testando Django Reverse URL com argumentos args e kwargs
+
+### Objetivos
+
+* Testar demais URLs.
+
+### Etapas
+
+Semelhante ao teste anterior, adicionar para as próximas URLs. No caso delas que recebem parametro, usar o kwargs.
+
+```Python
+# Omitindo código anterior
+def test_recipe_category_url_is_correct(self):
+    url = reverse("recipes:category", kwargs={"category_id": 1})
+    self.assertEqual(url, "/recipes/category/1/")
+
+def test_recipe_detail_url_is_correct(self):
+    url = reverse("recipes:recipe", kwargs={"id": 1})
+    self.assertEqual(url, "/recipes/1/")
+```
