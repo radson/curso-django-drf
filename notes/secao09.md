@@ -145,3 +145,33 @@ def test_recipe_detail_url_is_correct(self):
     url = reverse("recipes:recipe", kwargs={"id": 1})
     self.assertEqual(url, "/recipes/1/")
 ```
+
+## 75. Usando resolve para entender qual view function está sendo usada
+
+### Objetivos
+
+* Implementar testes para verificar se as URLs estão chegando nas views e rederizando como esperado.
+
+### Etapas
+
+A função `resolve` do Django irá resolver qual função da URL está sendo usada. O `assertIs` verifica se a função retornada em resolve é a mesma referencia que `views.home`.
+
+```Python
+from django.urls import resolve
+from recipes import views
+
+# omitido código sem alteração
+
+class RecipeViewsTest(TestCase):
+    def test_recipe_home_view_function_is_correct(self):
+        view = resolve(reverse("recipes:home"))
+        self.assertIs(view.func, views.home)
+
+    def test_recipe_category_view_function_is_correct(self):
+        view = resolve(reverse("recipes:category", kwargs={"category_id": 1}))
+        self.assertIs(view.func, views.category)
+
+    def test_recipe_detail_view_function_is_correct(self):
+        view = resolve(reverse("recipes:recipe", kwargs={"id": 1}))
+        self.assertIs(view.func, views.recipe)
+```

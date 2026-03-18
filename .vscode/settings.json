@@ -2,10 +2,14 @@
   "workbench.iconTheme": "material-icon-theme",
   "explorer.compactFolders": false,
   "window.zoomLevel": 0,
-  "python.languageServer": "Jedi", // ms-python.vscode-pylance
-  "python.testing.unittestEnabled": false, // ms-python.python
+  "editor.rulers": [79],
+  "python.useEnvironmentsExtension": false,
+  "python.languageServer": "Jedi", 
+  "python.testing.unittestEnabled": false, 
   "python.testing.pytestEnabled": true,
-  "python.testing.pytestArgs": [], // -x to bail
+  "python.testing.pytestArgs": [
+    "."
+  ], 
   "python.linting.flake8Enabled": true,
   "python.linting.mypyEnabled": true,
   "python.linting.pylintArgs": [
@@ -13,9 +17,11 @@
     "--errors-only"
   ],
   "python.formatting.autopep8Args": ["--indent-size=4"],
-  "python.defaultInterpreterPath": "venv/bin/python",
+  "python.defaultInterpreterPath": ".\\.venv\\Scripts\\python.exe",
+  "python.terminal.activateEnvironment": true,
+  "python.terminal.activateEnvInCurrentTerminal": true,
   "[python]": {
-    "editor.defaultFormatter": "ms-python.python", // ms-python.python
+    "editor.defaultFormatter": "charliermarsh.ruff", 
     "editor.tabSize": 4,
     "editor.insertSpaces": true,
     "editor.formatOnSave": true,
@@ -48,15 +54,15 @@
     "*.xml": "html",
     "*.svg": "html",
     "*.html": "html",
-    "django-html": "html", // batisteo.vscode-django
+    "django-html": "html", 
     "**/*.html": "html",
     "**/templates/**/*.html": "django-html",
     "**/base_templates/**/*.html": "django-html",
     "**/requirements{/**,*}.{txt,in}": "pip-requirements"
   },
   "emmet.includeLanguages": {
-    "django-html": "html", // batisteo.vscode-django
+    "django-html": "html", 
     "javascript": "javascriptreact",
     "typescript": "typescriptreact"
-  }
+  },
 }
