@@ -536,3 +536,34 @@ Para conhecimento quando for necessário falhar um teste:
 - [fail()](https://docs.python.org/3/library/unittest.html#unittest.TestCase.fail): Faz o teste falhar incondicionalmente com uma mensagem opcional.
 - [@skip](https://docs.python.org/3/library/unittest.html#unittest.skip): Decorator para pular um teste ou classe de testes.
 
+## 85. Testando se category e detail carregam a receita correta
+
+### Objetivos
+
+* Aplicar os testes que foram para home nas demais views.
+
+### Etapas
+
+Em ambos os casos, foi utilizado um `title` específico do teste para ajuda na organização e servir como documentação. O princípio é o mesmo dos códigos para testar templates anteriores, com a diferença de criar uma receita para cada teste com `make_recipe()`.
+
+```Python
+class RecipeViewsTest(RecipeTestBase):
+    # omitindo código já existente
+    def test_recipe_category_templates_loads_recipe(self):
+        needed_title = "This is a category test"
+        # Needs a recipe for this test
+        self.make_recipe(title=needed_title)
+        response = self.client.get(
+            reverse("recipes:category", kwargs={"category_id": 1})
+        )
+        content = response.content.decode("utf-8")
+        self.assertIn(needed_title, content)
+
+    def test_recipe_detail_templates_loads_the_correct_recipe(self):
+        needed_title = "This is a detail page - It loads one recipe"
+        # Needs a recipe for this test
+        self.make_recipe(title=needed_title)
+        response = self.client.get(reverse("recipes:recipe", args=(1,)))
+        content = response.content.decode("utf-8")
+        self.assertIn(needed_title, content)
+```
