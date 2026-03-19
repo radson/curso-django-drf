@@ -329,7 +329,9 @@ python manage.py test -k 'test_recipe_detail_view_returns_404_if_no_recipes_foun
 
 ### Etapas
 
-Inicialmente, adicionar um teste que cria manualmente os objetos. Na próxima aula adicionar mais recursos.
+Inicialmente, adicionar um teste que cria manualmente os objetos. Qualquer parte de código que é criado para dar suporte ao teste é chamado de fixture.
+
+Na próxima aula adicionar as assertions.
 
 ```Python
 from recipes.models import Category, Recipe, User
@@ -360,4 +362,28 @@ class RecipeViewsTest(TestCase):
             preparation_steps_is_html=False,
             is_published=True,
         )
+```
+
+## 81. Testando o context e content da response no template
+
+### Objetivos
+
+* Implementando os asserts para verificar o conteúdo retornado.
+
+### Etapas
+
+ Será verificado no context o número de recipes criado e se no content há evidência das strings esperadas.
+
+ ```Python
+     def test_recipe_home_templats_loads_recipe(self):
+        # omitindo código já existente
+
+        response = self.client.get(reverse("recipes:home"))
+        content = response.content.decode("utf-8")
+        response_context_recipes = response.context["recipes"]
+
+        self.assertEqual(len(response_context_recipes), 1)
+        self.assertIn("Recipe Title", content)
+        self.assertIn("10 Minutos", content)
+        self.assertIn("5 Porções", content)
 ```
