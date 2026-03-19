@@ -268,3 +268,25 @@ class RecipeViewsTest(TestCase):
         response = self.client.get(reverse("recipes:home"))
         self.assertTemplateUsed(response, "recipes/pages/home.html")
 ```
+
+## 78. Testando "No recipes found" quando receitas não existem
+
+### Objetivos
+
+* Testar quando uma view que derevia listar recipes não encontra nenhum e registo mas retorna uma string específica.
+
+### Etapas
+
+Para esse caso, usa-se o `assertIn` que busca uma substring dentro do `response.content`, que é o HTML do template. Neste caso há a string previamente definida.
+
+
+```Python
+class RecipeViewsTest(TestCase):
+    # omitindo código já existente
+
+    def test_recipe_home_template_shows_no_recipe_found_if_no_recipes(self):
+        response = self.client.get(reverse("recipes:home"))
+        self.assertIn("No recipes found", response.content.decode("utf-8"))
+```
+
+ATENÇÂO: Mesmo que haja recipes no banco de dados, quando o runner executa os testes ele cria um banco vazio em memória, neste caso específico o teste irá passar. Nas próximas seções serão usados os fixtures que são dados para os testes.
