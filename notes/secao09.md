@@ -273,7 +273,7 @@ class RecipeViewsTest(TestCase):
 
 ### Objetivos
 
-* Testar quando uma view que derevia listar recipes não encontra nenhum e registo mas retorna uma string específica.
+* Testar quando uma view que deveria listar recipes não encontra nenhum e registo mas retorna uma string específica.
 
 ### Etapas
 
@@ -290,3 +290,33 @@ class RecipeViewsTest(TestCase):
 ```
 
 ATENÇÂO: Mesmo que haja recipes no banco de dados, quando o runner executa os testes ele cria um banco vazio em memória, neste caso específico o teste irá passar. Nas próximas seções serão usados os fixtures que são dados para os testes.
+
+## 79. Testando 404 Not Found quando receitas não existem
+
+### Objetivos
+
+* Testar quando a view de category ou detail não encontrar nenhum registo e retornar 404.
+
+### Etapas
+
+A mesma lógica utilizada para verificar `status_code`. 
+
+```Python
+class RecipeViewsTest(TestCase):
+    # omitindo código já existente
+
+    def test_recipe_category_view_returns_404_if_no_recipes_found(self):
+        response = self.client.get("recipes:category", kwargs={"category_id": 1})
+        self.assertEqual(response.status_code, 404)
+    
+    def test_recipe_detail_view_returns_404_if_no_recipes_found(self):
+        response = self.client.get("recipes:recipe", kwargs={"id": 1})
+        self.assertEqual(response.status_code, 404)
+```
+
+Para testar, apresentando um modo diferente, onde apenas um dos testes precisa ser validado, usando o parametro `-k` tanto do `pytest` quanto do `manage.py test` onde informamos o nome do teste.
+
+```shell
+pytest -k 'test_recipe_detail_view_returns_404_if_no_recipes_found'
+python manage.py test -k 'test_recipe_detail_view_returns_404_if_no_recipes_found'
+```
