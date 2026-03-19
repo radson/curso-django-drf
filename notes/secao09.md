@@ -523,3 +523,16 @@ No teste `test_recipe_home_templats_loads_recipe` que necessita de ter uma recip
         self.assertEqual(len(response_context_recipes), 1)
         self.assertIn("Café da manhã", content)
 ```
+
+## 84. Falhar testes propositalmente com self.fail ou pular com @skip
+
+### Objetivos
+
+* Para casos que seja necessário fazer um teste falhar ou ser pulado.
+
+### Etapas
+
+Para conhecimento quando for necessário falhar um teste:
+- [fail()](https://docs.python.org/3/library/unittest.html#unittest.TestCase.fail): Faz o teste falhar incondicionalmente com uma mensagem opcional.
+- [@skip](https://docs.python.org/3/library/unittest.html#unittest.skip): Decorator para pular um teste ou classe de testes.
+
