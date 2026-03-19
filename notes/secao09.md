@@ -175,3 +175,72 @@ class RecipeViewsTest(TestCase):
         view = resolve(reverse("recipes:recipe", kwargs={"id": 1}))
         self.assertIs(view.func, views.recipe)
 ```
+
+## 76. Separando os testes em um package chamado tests com `__init__.py`
+
+### Objetivos
+
+* Em vista do crescimento do número e categorias de testes, oganizar os testes em packages do Python.
+
+### Etapas
+
+Dentro do app `recipes` adicionar um diretório `tests` com o arquivo `__init__´.py` que indica um pacote.
+
+```shell
+mkdir recipes/tests
+> recipes/tests/__init__.py
+> recipes/tests/test_recipe_url.py
+> recipes/tests/test_recipe_views.py
+```
+
+O conteúdo do `test_recipe_url.py` será:
+
+```Python
+from django.test import TestCase
+from django.urls import reverse
+
+
+class RecipeURLsTest(TestCase):
+    def test_recipe_home_url_is_correct(self):
+        url = reverse("recipes:home")
+        self.assertEqual(url, "/")
+
+    def test_recipe_category_url_is_correct(self):
+        url = reverse("recipes:category", kwargs={"category_id": 1})
+        self.assertEqual(url, "/recipes/category/1/")
+
+    def test_recipe_detail_url_is_correct(self):
+        url = reverse("recipes:recipe", kwargs={"id": 1})
+        self.assertEqual(url, "/recipes/1/")
+```
+
+O conteúdo do `test_recipe_views.py` será:
+
+```Python
+from django.test import TestCase
+from django.urls import resolve, reverse
+
+from recipes import views
+
+
+class RecipeViewsTest(TestCase):
+    def test_recipe_home_view_function_is_correct(self):
+        view = resolve(reverse("recipes:home"))
+        self.assertIs(view.func, views.home)
+
+    def test_recipe_category_view_function_is_correct(self):
+        view = resolve(reverse("recipes:category", kwargs={"category_id": 1}))
+        self.assertIs(view.func, views.category)
+
+    def test_recipe_detail_view_function_is_correct(self):
+        view = resolve(reverse("recipes:recipe", kwargs={"id": 1}))
+        self.assertIs(view.func, views.recipe)
+```
+
+Depois de criar os arquivos e separar os conteúdos das classes nos respectivos arquivos, deletar o `recipes/tests.py` e testar se os testes irão passar.
+
+```shell
+rm recipes/tests.py
+pytest
+```
+
