@@ -320,3 +320,44 @@ Para testar, apresentando um modo diferente, onde apenas um dos testes precisa s
 pytest -k 'test_recipe_detail_view_returns_404_if_no_recipes_found'
 python manage.py test -k 'test_recipe_detail_view_returns_404_if_no_recipes_found'
 ```
+
+## 80. Criando fixtures para um teste único (Recipe, Category e Author)
+
+### Objetivos
+
+* Testar views com conteúdo usando fixtures.
+
+### Etapas
+
+Inicialmente, adicionar um teste que cria manualmente os objetos. Na próxima aula adicionar mais recursos.
+
+```Python
+from recipes.models import Category, Recipe, User
+
+class RecipeViewsTest(TestCase):
+    # omitindo código já existente
+
+    def test_recipe_home_templats_loads_recipe(self):
+        category = Category.objects.create(name="Category")
+        author = User.objects.create_user(
+            first_name="User",
+            last_name="Last",
+            username="username",
+            password="1234",
+            email="username@gmail.com",
+        )
+        recipe = Recipe.objects.create(
+            category=category,
+            author=author,
+            title="Recipe Title",
+            description="Recipe Description",
+            slug="recipe-slug",
+            preparation_time="10",
+            preparation_time_unit="Minutos",
+            servings=5,
+            servings_unit="Porções",
+            preparation_steps="Recipe Preparation Stepes",
+            preparation_steps_is_html=False,
+            is_published=True,
+        )
+```
