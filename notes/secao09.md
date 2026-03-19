@@ -387,3 +387,56 @@ class RecipeViewsTest(TestCase):
         self.assertIn("10 Minutos", content)
         self.assertIn("5 Porções", content)
 ```
+
+## 82. Criando uma classe de base para os testes
+
+### Objetivos
+
+* Usar métodos de `Set Up` e `Tear Down` para serem usados antes e depois do testes. Criar uma classe apenas do `Set Up`.
+
+### Etapas
+
+Adicionar o arquivo `recipes\tests\test_recipe_base.py` onde será implementada uma classe base que herda de `TestCase`. Nesta classe será movido o conteúdo que cria os objetos Category, User e Recipe que estavam anteriormente em `test_recipe_home_templats_loads_recipe`.
+
+ ```Python
+from django.test import TestCase
+from recipes.models import Category, Recipe, User
+
+class RecipeTestBase(TestCase):
+    def setUp(self) -> None:
+        category = Category.objects.create(name="Category")
+        author = User.objects.create_user(
+            first_name="User",
+            last_name="Last",
+            username="username",
+            password="1234",
+            email="username@gmail.com",
+        )
+        recipe = Recipe.objects.create(
+            category=category,
+            author=author,
+            title="Recipe Title",
+            description="Recipe Description",
+            slug="recipe-slug",
+            preparation_time="10",
+            preparation_time_unit="Minutos",
+            servings=5,
+            servings_unit="Porções",
+            preparation_steps="Recipe Preparation Stepes",
+            preparation_steps_is_html=False,
+            is_published=True,
+        )
+        return super().setUp()
+
+```
+
+Em `test_recipe_views.py` pode-se remover o import dos `models` e adicionar o import da classe base.
+
+ ```Python
+from .test_recipe_base import RecipeTestBase
+
+class RecipeViewsTest(RecipeTestBase):
+    # omitindo código já existente
+```
+
+Nesta aula, com essa implementação o teste `test_recipe_home_template_shows_no_recipe_found_if_no_recipes` irá falhar pois não deveria encontrar registros. Será implementada solução na próxima aula.
