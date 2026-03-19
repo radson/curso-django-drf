@@ -244,3 +244,27 @@ rm recipes/tests.py
 pytest
 ```
 
+## 77. Usando self.client do Django para simular o cliente nos testes
+
+### Objetivos
+
+* Adicionar recursos extras de validação como status code e template de cada view.
+
+### Etapas
+
+O Django prove um client para testar as requests e responses do HTTP. Para ambos os casos o cliente usará um `get()`. No teste de template, usa-se um assert específico `assertTemplateUsed` que verifica se na response o template especificado foi carregado.
+
+No arquivo `test_recipe_views.py` adicionar os seguintes testes.
+
+```Python
+class RecipeViewsTest(TestCase):
+    # omitindo código já existente
+
+    def test_recipe_home_view_returns_status_code_200_OK(self):
+        response = self.client.get(reverse("recipes:home"))
+        self.assertEqual(response.status_code, 200)
+
+    def test_recipe_home_view_loads_correct_template(self):
+        response = self.client.get(reverse("recipes:home"))
+        self.assertTemplateUsed(response, "recipes/pages/home.html")
+```
