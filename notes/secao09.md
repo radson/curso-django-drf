@@ -440,3 +440,86 @@ class RecipeViewsTest(RecipeTestBase):
 ```
 
 Nesta aula, com essa implementação o teste `test_recipe_home_template_shows_no_recipe_found_if_no_recipes` irá falhar pois não deveria encontrar registros. Será implementada solução na próxima aula.
+
+## 83. Extraindo métodos para reutilização na classe de base dos testes
+
+### Objetivos
+
+* Separar as atribuições de criação na classe base.
+
+### Etapas
+
+Em `RecipeTestBase`, separar a criação dos objetos em métodos específicos, sendo o principal o `make_recipe` que chama os demais caso necessário.
+
+```Python
+class RecipeTestBase(TestCase):
+    def make_category(self, name="Category"):
+        return Category.objects.create(name=name)
+
+    def make_author(
+        self,
+        first_name="User",
+        last_name="Last",
+        username="username",
+        password="1234",
+        email="username@gmail.com",
+    ):
+        return User.objects.create_user(
+            first_name=first_name,
+            last_name=last_name,
+            username=username,
+            password=password,
+            email=email,
+        )
+
+    def make_recipe(
+        self,
+        category_data=None,
+        author_data=None,
+        title="Recipe Title",
+        description="Recipe Description",
+        slug="recipe-slug",
+        preparation_time="10",
+        preparation_time_unit="Minutos",
+        servings=5,
+        servings_unit="Porções",
+        preparation_steps="Recipe Preparation Stepes",
+        preparation_steps_is_html=False,
+        is_published=True,
+    ):
+        if category_data is None:
+            category_data = {}
+
+        if author_data is None:
+            author_data = {}
+
+        return Recipe.objects.create(
+            category=self.make_category(**category_data),
+            author=self.make_author(**author_data),
+            title=title,
+            description=description,
+            slug=slug,
+            preparation_time=preparation_time,
+            preparation_time_unit=preparation_time_unit,
+            servings=servings,
+            servings_unit=servings_unit,
+            preparation_steps=preparation_steps,
+            preparation_steps_is_html=preparation_steps_is_html,
+            is_published=is_published,
+        )
+```
+
+No teste `test_recipe_home_templats_loads_recipe` que necessita de ter uma recipe criada. Pode-se invocar o `make_recipe` para seja criado apenas para este teste. Neste exemplo foi definido um campo específico `category_data` que deseja-se buscar no content.
+
+```Python
+    def test_recipe_home_templats_loads_recipe(self):
+        # Needs a recipe for this test
+        self.make_recipe(category_data={"name": "Café da manhã"})
+        response = self.client.get(reverse("recipes:home"))
+        content = response.content.decode("utf-8")
+        response_context_recipes = response.context["recipes"]
+
+        # Check if one recipe exists
+        self.assertEqual(len(response_context_recipes), 1)
+        self.assertIn("Café da manhã", content)
+```

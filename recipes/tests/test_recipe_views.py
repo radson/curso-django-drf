@@ -6,9 +6,6 @@ from .test_recipe_base import RecipeTestBase
 
 
 class RecipeViewsTest(RecipeTestBase):
-    def tearDown(self) -> None:
-        return super().tearDown()
-
     def test_recipe_home_view_function_is_correct(self):
         view = resolve(reverse("recipes:home"))
         self.assertIs(view.func, views.home)
@@ -26,14 +23,15 @@ class RecipeViewsTest(RecipeTestBase):
         self.assertIn("No recipes found", response.content.decode("utf-8"))
 
     def test_recipe_home_templats_loads_recipe(self):
+        # Needs a recipe for this test
+        self.make_recipe(category_data={"name": "Café da manhã"})
         response = self.client.get(reverse("recipes:home"))
         content = response.content.decode("utf-8")
         response_context_recipes = response.context["recipes"]
 
+        # Check if one recipe exists
         self.assertEqual(len(response_context_recipes), 1)
-        self.assertIn("Recipe Title", content)
-        self.assertIn("10 Minutos", content)
-        self.assertIn("5 Porções", content)
+        self.assertIn("Café da manhã", content)
 
     def test_recipe_category_view_function_is_correct(self):
         view = resolve(reverse("recipes:category", kwargs={"category_id": 1}))
